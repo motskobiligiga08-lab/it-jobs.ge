@@ -1,0 +1,51 @@
+{% load static %}
+<!doctype html>
+<html lang="ka">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ITJobs.ge — ტექნოლოგიური ვაკანსიები საქართველოში და საერთაშორისო ბაზარზე.">
+  <title>{% block title %}ITJobs.ge{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=FiraGO:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="{% url 'home' %}"><span class="brand-mark">&lt;/&gt;</span><span>ITJobs<span class="brand-dot">.ge</span></span></a>
+      <button class="menu-toggle" aria-label="მენიუს გახსნა" data-menu-toggle>☰</button>
+      <nav class="main-nav" data-menu>
+        <a href="{% url 'jobs_list' %}">ვაკანსიები</a>
+        <a href="{% url 'for_developers' %}">დეველოპერებისთვის</a>
+        <a href="{% url 'for_employers' %}">დამსაქმებლებისთვის</a>
+        <a href="{% url 'about' %}">ჩვენ შესახებ</a>
+      </nav>
+      <a class="btn btn-primary nav-cta" href="{% url 'post_job' %}">+ ვაკანსიის დამატება</a>
+    </div>
+  </header>
+
+  {% if messages %}
+  <div class="container messages">
+    {% for message in messages %}<div class="message">{{ message }}</div>{% endfor %}
+  </div>
+  {% endif %}
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="{% url 'home' %}"><span class="brand-mark">&lt;/&gt;</span><span>ITJobs<span class="brand-dot">.ge</span></span></a>
+        <p>ტექნოლოგიური ვაკანსიები. უკეთესი შესაძლებლობები.</p>
+      </div>
+      <div><strong>პლატფორმა</strong><a href="{% url 'jobs_list' %}">ვაკანსიები</a><a href="{% url 'for_developers' %}">დეველოპერებისთვის</a></div>
+      <div><strong>კომპანიებისთვის</strong><a href="{% url 'post_job' %}">ვაკანსიის დამატება</a><a href="{% url 'for_employers' %}">დამსაქმებლებისთვის</a></div>
+      <div><strong>ITJobs.ge</strong><a href="{% url 'about' %}">ჩვენ შესახებ</a><a href="tel:+995593902052">+995 593 90 20 52</a><a class="btn btn-whatsapp" href="https://wa.me/995593902052" target="_blank" rel="noopener noreferrer">WhatsApp-ზე მოგვწერე ↗</a><a href="mailto:hello@itjobs.ge">hello@itjobs.ge</a></div>
+    </div>
+    <div class="container footer-bottom">© 2026 ITJobs.ge · ქართული IT კარიერის პლატფორმა</div>
+  </footer>
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

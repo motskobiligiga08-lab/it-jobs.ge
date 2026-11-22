@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}ვაკანსიის დამატება — ITJobs.ge{% endblock %}
+{% block content %}
+<section class="page-hero compact"><div class="container narrow"><span class="eyebrow">დამსაქმებლებისთვის</span><h1>დაამატე ახალი IT ვაკანსია.</h1><p>შეავსე ინფორმაცია მაქსიმალურად ზუსტად — კანდიდატს გადაწყვეტილების მიღება გაუადვილდება.</p></div></section>
+<section class="section"><div class="container narrow"><form class="form-card" method="post">{% csrf_token %}{% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}<div class="form-grid">{% for field in form %}<label class="{% if field.name == 'description' or field.name == 'requirements' or field.name == 'benefits' or field.name == 'skills' %}span-2{% endif %}"><span>{{ field.label }}</span>{{ field }}{% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}{% for error in field.errors %}<em>{{ error }}</em>{% endfor %}</label>{% endfor %}</div><div class="form-actions"><a class="btn btn-secondary" href="{% url 'home' %}">გაუქმება</a><button class="btn btn-primary" type="submit">ვაკანსიის გამოქვეყნება →</button></div></form></div></section>
+{% endblock %}

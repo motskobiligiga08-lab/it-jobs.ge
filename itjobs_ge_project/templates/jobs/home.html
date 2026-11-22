@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}ITJobs.ge — იპოვე შემდეგი IT შესაძლებლობა{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-glow hero-glow-one"></div><div class="hero-glow hero-glow-two"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="live-dot"></span> საქართველოს ტექნოლოგიური კარიერის ჰაბი</span>
+      <h1>იპოვე შენი შემდეგი <span>შესაძლებლობა IT-ში.</span></h1>
+      <p>ერთ სივრცეში აღმოაჩინე დეველოპერის, დიზაინის, QA, DevOps და სხვა ტექნოლოგიური ვაკანსიები საქართველოში და საერთაშორისო ბაზარზე.</p>
+      <form class="hero-search" action="{% url 'jobs_list' %}" method="get">
+        <span class="search-icon">⌕</span>
+        <input name="q" placeholder="პოზიცია, ტექნოლოგია ან კომპანია..." aria-label="ვაკანსიის ძებნა">
+        <button class="btn btn-primary" type="submit">ძებნა</button>
+      </form>
+      <div class="popular"><span>პოპულარული:</span><a href="{% url 'jobs_list' %}?q=Python">Python</a><a href="{% url 'jobs_list' %}?q=React">React</a><a href="{% url 'jobs_list' %}?work_mode=remote">Remote</a><a href="{% url 'jobs_list' %}?level=junior">Junior</a></div>
+      <div class="stats-row">
+        <div><strong>{{ job_count }}+</strong><span>აქტიური ვაკანსია</span></div>
+        <div><strong>{{ company_count }}+</strong><span>ტექ კომპანია</span></div>
+        <div><strong>{{ remote_count }}+</strong><span>Remote პოზიცია</span></div>
+      </div>
+    </div>
+    <div class="hero-card-stack">
+      {% for job in featured_jobs %}
+      <a class="spotlight-card {% if forloop.first %}is-main{% endif %}" href="{{ job.get_absolute_url }}">
+        <div class="job-top"><div class="company-logo">{{ job.company.logo_letter }}</div><span class="badge badge-accent">რჩეული</span></div>
+        <h3>{{ job.title }}</h3>
+        <p>{{ job.company.name }} · {{ job.location }}</p>
+        <div class="chip-row">{% for skill in job.skill_list|slice:':3' %}<span class="chip">{{ skill }}</span>{% endfor %}</div>
+        <div class="spotlight-foot"><strong>{{ job.salary_display }}</strong><span>ნახვა →</span></div>
+      </a>
+      {% empty %}<div class="empty-card">დემოსთვის გაუშვი <code>python manage.py seed_jobs</code></div>{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section jobs-preview">
+  <div class="container">
+    <div class="section-head"><div><span class="eyebrow small">ახალი შესაძლებლობები</span><h2>ბოლო ვაკანსიები</h2></div><a class="text-link" href="{% url 'jobs_list' %}">ყველას ნახვა →</a></div>
+    <div class="job-list">
+      {% for job in latest_jobs %}
+      <a class="job-card" href="{{ job.get_absolute_url }}">
+        <div class="company-logo large">{{ job.company.logo_letter }}</div>
+        <div class="job-main"><div class="job-title-row"><h3>{{ job.title }}</h3>{% if job.is_featured %}<span class="badge badge-accent">რჩეული</span>{% endif %}</div><p>{{ job.company.name }} · {{ job.location }}</p><div class="chip-row"><span class="chip">{{ job.get_work_mode_display }}</span><span class="chip">{{ job.get_level_display }}</span>{% for skill in job.skill_list|slice:':2' %}<span class="chip muted">{{ skill }}</span>{% endfor %}</div></div>
+        <div class="job-side"><strong>{{ job.salary_display }}</strong><span>{{ job.get_employment_type_display }}</span><span class="arrow-btn">→</span></div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section features-section">
+  <div class="container">
+    <div class="center-head"><span class="eyebrow small">IT საზოგადოებისთვის შექმნილი</span><h2>ყველაფერი იწყება აქ</h2><p>ნაკლები ხმაური, მეტი შესაბამისი შესაძლებლობა — როგორც კანდიდატებისთვის, ისე დამსაქმებლებისთვის.</p></div>
+    <div class="feature-grid">
+      <article class="feature-card"><div class="feature-icon">⌕</div><h3>ჭკვიანი ძიება</h3><p>იპოვე პოზიციები ტექნოლოგიის, გამოცდილების დონის, ლოკაციისა და სამუშაო ფორმატის მიხედვით.</p></article>
+      <article class="feature-card"><div class="feature-icon">⌘</div><h3>დეველოპერის ფოკუსი</h3><p>პლატფორმა თავიდანვე მორგებულია პროგრამისტებზე, QA, DevOps, დიზაინერებსა და IT სპეციალისტებზე.</p></article>
+      <article class="feature-card"><div class="feature-icon">↗</div><h3>ქართული + Remote ბაზარი</h3><p>ადგილობრივ შესაძლებლობებთან ერთად შეგიძლია მოძებნო საერთაშორისო დისტანციური პოზიციებიც.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section employer-cta">
+  <div class="container cta-panel">
+    <div><span class="eyebrow dark">კომპანიებისთვის</span><h2>ეძებ ტექნოლოგიურ ტალანტს?</h2><p>დაამატე ვაკანსია და მიაწვდინე ხმა სწორ აუდიტორიას — პროგრამისტებსა და IT სპეციალისტებს.</p></div>
+    <a class="btn btn-light" href="{% url 'post_job' %}">ვაკანსიის დამატება →</a>
+  </div>
+</section>
+{% endblock %}
