@@ -56,6 +56,9 @@ AUTH_PASSWORD_VALIDATORS = []
 LANGUAGE_CODE = 'ka'
 TIME_ZONE = 'Asia/Tbilisi'
 USE_I18N = True
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
